@@ -1,6 +1,9 @@
 import 'package:accident_registration/models/accident_model.dart';
 import 'package:accident_registration/resource/string_resource.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
+
+const _fieldsLength = 6;
 
 class AccidentInfoPage extends StatelessWidget {
   const AccidentInfoPage({
@@ -12,34 +15,45 @@ class AccidentInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(model.fullName),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: List.generate(
-            6,
-            (index) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _getTextRow(index)[0],
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(_getTextRow(index)[1]),
-                ],
+        appBar: AppBar(
+          title: Text(model.fullName),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+              _fieldsLength,
+              (index) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _getTextRow(index)[0],
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(_getTextRow(index)[1]),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            final rowTexts =
+                List.generate(_fieldsLength, (index) => _getTextRow(index));
+            var text = '';
+            for (final rowText in rowTexts) {
+              text += '${rowText[0]}: ${rowText[1]}\n';
+            }
+            Share.share(text);
+          },
+          child: const Icon(Icons.share),
+        ));
   }
 
   List<String> _getTextRow(int index) {

@@ -17,8 +17,8 @@ class _Register {
   final fullName = 'Ф.И.О';
   final address = 'Адрес';
   final dateTime = 'Дата и Время';
-  final vehicle = 'Авто';
-  final vehicleNumber = 'Гос #';
-  final vehicleBrand = 'Марка';
+  final vehicle = 'Вид проишествия';
+  final vehicleNumber = 'Контанктные данные';
+  final vehicleBrand = 'Марка и гос #';
   final done = 'Готово';
 }
